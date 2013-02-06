@@ -116,4 +116,8 @@ module.exports = {
       consumerKey: 'Enter your consumer key here'
     , consumerSecret: 'Enter your consumer secret here'
   }
+  , lastfm: {
+        appId: 'cb97a8e314b917c121a21d640c452a01'
+      , appSecret: 'eb937ef63f34fa217a97320b30fb64bc'
+    }
 };

@@ -51,6 +51,7 @@ var usersBySoundCloudId = {};
 var usersByMailchimpId = {};
 var usersMailruId = {};
 var usersByMendeleyId = {};
+var usersByLastFmId = {};
 var usersByLogin = {
   'brian@example.com': addUser({ login: 'brian@example.com', password: 'password'})
 };
@@ -411,6 +412,17 @@ everyauth
     })
     .redirectPath("/");
 
+everyauth.lastfm
+  .appId(conf.lastfm.appId)
+  .appSecret(conf.lastfm.appSecret)
+  .entryPath('/auth/lastfm')
+  .callbackPath('/auth/lastfm/callback')
+  .findOrCreateUser( function (sess, sessionToken, lastfmUser) {
+    return usersByLastFmId[lastfmUser.session.name] ||
+      (usersByLastFmId[lastfmUser.session.name] = addUser('lastfm', lastfmUser));
+  })
+  .redirectPath('/');
+
 var app = express();
 app.use(express.static(__dirname + '/public'))
   .use(express.favicon())
@@ -428,8 +440,8 @@ app.get('/', function (req, res) {
   res.render('home');
 });
 
-app.listen(3000);
+app.listen(3001);
 
-console.log('Go to http://local.host:3000');
+console.log('Go to http://local.host:3001');
 
 module.exports = app;
